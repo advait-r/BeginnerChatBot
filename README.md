@@ -1,4 +1,4 @@
-# ChatBotRepo
+# BeginnerChatBot
 repository for beginner chatbot
 
 # This is just a beginner chatbot without advanced logic or deep learning techniques. Although it uses voice commands and flexible functions it also uses text input and replies to communicate with the user.
