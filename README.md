@@ -1,62 +1,60 @@
 # ChatBotRepo
 repository for beginner chatbot
 
-# this is just a beginner chatbot without any advanced logic or deep learning techniques. 
-# Although it uses voice commands, 
-# flexible functions and also uses text input and replies to communicate with the user.
+# This is just a beginner chatbot without advanced logic or deep learning techniques. Although it uses voice commands and flexible functions it also uses text input and replies to communicate with the user.
 
-import sys
-import speech_recognition as sr
-from gtts import gTTS
-import playsound
-import pyaudio
-import os
-import time
-import random
-import wikipedia as wiki
-import PyQt5.QtWidgets as qtw
-import PyQt5.QtGui as qtg
+    import sys
+    import speech_recognition as sr
+    from gtts import gTTS
+    import playsound
+    import pyaudio
+    import os
+    import time
+    import random
+    import wikipedia as wiki
+    import PyQt5.QtWidgets as qtw
+    import PyQt5.QtGui as qtg
 
 
-def speak(text):
-    tts = gTTS(text=text)
-    filename = "voice.mp3"
-    tts.save(filename)
-    playsound.playsound(filename)
+    def speak(text):
+        tts = gTTS(text=text)
+        filename = "voice.mp3"
+        tts.save(filename)
+        playsound.playsound(filename)
 
 
-def get_audio():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        audio = r.listen(source)
-        said = ""
+    def get_audio():
+        r = sr.Recognizer()
+         with sr.Microphone() as source:
+          audio = r.listen(source)
+            said = ""
 
+            try:
+                said = r.recognize_google(audio)
+                print(said)
+
+            except Exception as e:
+                speak("could not catch that, please say again")
+
+        return said
+
+
+    def wiki_search():
         try:
-            said = r.recognize_google(audio)
-            print(said)
+            speak("what do you want to search?")
+            word = get_audio()
+            info = wiki.summary(word, sentences=5)
+            print(info)
+            text = info
+            speak("okay here you go")
+            speak(text)
 
         except Exception as e:
             speak("could not catch that, please say again")
 
-    return said
 
 
-def wiki_search():
-    try:
-        speak("what do you want to search?")
-        word = get_audio()
-        info = wiki.summary(word, sentences=5)
-        print(info)
-        text = info
-        speak("okay here you go")
-        speak(text)
-
-    except Exception as e:
-        speak("could not catch that, please say again")
-
-
-
-class MainWindow(qtw.QWidget):
+    class MainWindow(qtw.QWidget):
 
     def __init__(self):
         super().__init__()
@@ -171,8 +169,8 @@ class MainWindow(qtw.QWidget):
             sys.exit(0)
 
 
-app = qtw.QApplication([])
-mw = MainWindow()
+    app = qtw.QApplication([])
+    mw = MainWindow()
 
-app.exec()
+    app.exec()
 
